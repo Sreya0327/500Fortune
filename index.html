@@ -123,8 +123,8 @@
       <div class="card"><h3>意 · 德 · 其他 <small>上榜企业数量</small></h3><div class="chart" id="c_ydq"></div></div>
     </div>
     <div class="grid" style="margin-top:14px">
-      <div class="card"><h3>自定义国家对比 <small>多选国家联动折线</small>
-        <span style="margin-left:auto"><select id="cmpSel" multiple size="5" style="min-width:150px"></select></span></h3>
+      <div class="card"><h3>自定义国家对比 <small>点击国家即可多选/取消（无需按Ctrl）</small>
+        <span style="margin-left:auto"><select id="cmpSel" multiple size="8" style="min-width:170px"></select></span></h3>
         <div class="chart" id="c_cmp" style="height:340px"></div></div>
     </div>
   </section>
@@ -687,6 +687,7 @@ function renderCmp(){const sel=[...cmpSel.selectedOptions].map(o=>o.value);const
   else sel.forEach(c=>{if(D.sec1.allCountries[c])map[c]=D.sec1.allCountries[c];});
   multiline('c_cmp',s1cfg(map,true));}
 cmpSel.onchange=renderCmp;
+cmpSel.addEventListener('mousedown',e=>{if(e.target&&e.target.tagName==='OPTION'){e.preventDefault();e.target.selected=!e.target.selected;const sc=cmpSel.scrollTop;renderCmp();setTimeout(()=>{cmpSel.scrollTop=sc;},0);}});
 
 /* ================= 板块2 ================= */
 let metric='rev';
