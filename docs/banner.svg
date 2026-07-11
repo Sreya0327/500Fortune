@@ -1,0 +1,44 @@
+<svg viewBox="0 0 1200 320" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI','Microsoft YaHei',sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1322"/><stop offset="1" stop-color="#18294a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d9b26a"/><stop offset="1" stop-color="#f0cf8f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="320" rx="18" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="320" rx="18" fill="none" stroke="#263a5c" stroke-width="2"/>
+  <!-- decorative bars -->
+  <g opacity="0.9">
+    <rect x="720" y="220" width="26" height="60" rx="3" fill="#4a90d9"/>
+    <rect x="756" y="180" width="26" height="100" rx="3" fill="#d9b26a"/>
+    <rect x="792" y="140" width="26" height="140" rx="3" fill="#e2574c"/>
+    <rect x="828" y="196" width="26" height="84" rx="3" fill="#3fae86"/>
+    <rect x="864" y="120" width="26" height="160" rx="3" fill="#f0cf8f"/>
+    <rect x="900" y="168" width="26" height="112" rx="3" fill="#b07fd4"/>
+    <rect x="936" y="150" width="26" height="130" rx="3" fill="#5ec8c8"/>
+    <rect x="972" y="205" width="26" height="75" rx="3" fill="#e59f57"/>
+    <rect x="1008" y="110" width="26" height="170" rx="3" fill="#d9b26a"/>
+    <rect x="1044" y="185" width="26" height="95" rx="3" fill="#4a90d9"/>
+    <rect x="1080" y="160" width="26" height="120" rx="3" fill="#e2574c"/>
+    <rect x="1116" y="205" width="26" height="75" rx="3" fill="#8db255"/>
+  </g>
+  <polyline points="720,150 770,120 820,135 870,90 920,105 970,70 1020,88 1070,60 1120,80"
+    fill="none" stroke="url(#gold)" stroke-width="3" stroke-linejoin="round" opacity="0.85"/>
+  <g>
+    <circle cx="70" cy="70" r="20" fill="none" stroke="url(#gold)" stroke-width="4"/>
+    <text x="70" y="78" font-size="24" fill="#f0cf8f" text-anchor="middle" font-weight="bold">500</text>
+  </g>
+  <text x="110" y="80" font-size="34" font-weight="bold" fill="#e8eef7">《财富》全球企业 <tspan fill="url(#gold)">500强</tspan> 分析仪表板</text>
+  <text x="60" y="140" font-size="19" fill="#9db0cc">Fortune Global 500 — Interactive Analytics Dashboard (1995–2025)</text>
+  <text x="60" y="196" font-size="15" fill="#6f83a3">5 大板块 · 年份区间 · 联动筛选 · 上传合并 · 纯离线 · 零依赖</text>
+  <text x="60" y="222" font-size="15" fill="#6f83a3">5 sections · range slider · cross-filter · upload &amp; merge · fully offline · zero dependencies</text>
+  <g font-size="13" fill="#12233d">
+    <rect x="60" y="245" width="132" height="26" rx="13" fill="#d9b26a"/><text x="126" y="262" text-anchor="middle" font-weight="bold">各国上榜趋势</text>
+    <rect x="200" y="245" width="150" height="26" rx="13" fill="#4a90d9"/><text x="275" y="262" text-anchor="middle" font-weight="bold">TOP30 历年变化</text>
+    <rect x="358" y="245" width="132" height="26" rx="13" fill="#e2574c"/><text x="424" y="262" text-anchor="middle" font-weight="bold">500强简析</text>
+    <rect x="498" y="245" width="132" height="26" rx="13" fill="#3fae86"/><text x="564" y="262" text-anchor="middle" font-weight="bold">中国企业分析</text>
+    <rect x="638" y="245" width="120" height="26" rx="13" fill="#b07fd4"/><text x="698" y="262" text-anchor="middle" font-weight="bold">行业分析</text>
+  </g>
+</svg>
