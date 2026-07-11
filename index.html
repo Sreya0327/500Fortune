@@ -75,6 +75,22 @@
   .yrhandle{position:absolute;top:2px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--gold2);border:2px solid #0e1726;cursor:grab;box-shadow:0 1px 4px rgba(0,0,0,.5);transition:transform .08s}
   .yrhandle:hover{transform:scale(1.15)}
   .yrhandle:active{cursor:grabbing}
+  #gate{position:fixed;inset:0;z-index:2000;background:linear-gradient(160deg,#0b1322,#12233d);display:flex;align-items:center;justify-content:center;padding:20px}
+  .gate-box{max-width:600px;width:100%;text-align:center}
+  .gate-logo{font-size:26px;font-weight:bold;margin-bottom:6px}
+  .gate-logo b{color:var(--gold)}
+  .gate-sub{color:var(--sub);font-size:14px;margin-bottom:28px}
+  .gate-opts{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+  .gate-opt{flex:1;min-width:210px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 18px;cursor:pointer;color:var(--ink);font-family:inherit;transition:.15s}
+  .gate-opt:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 26px rgba(0,0,0,.4)}
+  .gate-opt b{display:block;font-size:18px;margin-bottom:8px;color:var(--gold2)}
+  .gate-opt span{font-size:12.5px;color:var(--sub);line-height:1.7}
+  #gatePw{margin-top:24px;display:none}
+  #gatePw input{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--ink);font-size:14px;width:220px;text-align:center;font-family:inherit}
+  #gatePw input:focus{outline:1px solid var(--gold)}
+  #gatePwBtn{margin-left:8px;background:var(--gold);color:#12233d;font-weight:bold;border:none;border-radius:8px;padding:10px 20px;cursor:pointer;font-family:inherit}
+  #gatePwErr{color:var(--red);font-size:12.5px;margin-top:10px;min-height:16px}
+  .gate-note{color:var(--muted);font-size:11.5px;margin-top:28px;line-height:1.6}
   #tip{position:fixed;pointer-events:none;z-index:999;background:#0b1322f2;border:1px solid #33507d;border-radius:8px;padding:8px 10px;font-size:12px;color:var(--ink);box-shadow:0 6px 24px rgba(0,0,0,.5);max-width:280px;display:none;line-height:1.5}
   .foot{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
   @media(max-width:1024px){.g2,.g3,.g23{grid-template-columns:1fr}}
@@ -82,6 +98,22 @@
 </head>
 <body>
 <div id="tip"></div>
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-logo">《财富》全球企业 <b>500强</b> 分析仪表板</div>
+    <div class="gate-sub">请选择进入方式 · Select access mode</div>
+    <div class="gate-opts">
+      <button class="gate-opt" id="gGuest"><b>👁 游客浏览</b><span>查看全部图表与分析<br>不含数据下载 / 上传底表功能</span></button>
+      <button class="gate-opt" id="gInternal"><b>🔒 内部查看</b><span>需输入进入密码<br>含下载 / 上传底表等全部功能</span></button>
+    </div>
+    <div id="gatePw">
+      <input type="password" id="gatePwInput" placeholder="请输入进入密码" autocomplete="off">
+      <button id="gatePwBtn">进入</button>
+      <div id="gatePwErr"></div>
+    </div>
+    <div class="gate-note">说明：本页为纯前端静态页面，此密码仅作轻量访问控制，非严格数据加密。</div>
+  </div>
+</div>
 <div class="topbar">
   <div class="brand">
     <h1>《财富》全球企业 <b>500强</b> 分析</h1><br>
@@ -96,6 +128,7 @@
       <span class="yearbig" id="yearRangeShow"></span></div>
     <div class="ctrl">快照年 <span class="yearbig" id="yearShow"></span></div>
     <button id="resetBtn">重置视图</button>
+    <button id="modeBtn" title="切换 游客/内部 模式">🔒 内部登录</button>
     <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none">
     <button id="tplBtn" title="下载可填写的底表模板(CSV，表头按《财富》500强Excel逻辑设计)">⤓ 下载底表模板</button>
     <button id="uploadBtn" style="border-color:var(--gold);color:var(--gold2)" title="上传新一年/整表数据，自动匹配表头并合并进总表">⤴ 上传数据(合并至总表)</button>
@@ -890,6 +923,25 @@ const navA=[...document.querySelectorAll('#nav a')];
 const secs=navA.map(a=>document.querySelector(a.getAttribute('href')));
 window.addEventListener('scroll',()=>{let idx=0;secs.forEach((s,i)=>{if(s.getBoundingClientRect().top<160)idx=i;});
   navA.forEach((a,i)=>a.classList.toggle('active',i===idx));});
+
+/* ================= 进入版本 / 访问控制 ================= */
+(function(){
+  const gate=document.getElementById('gate');
+  const gGuest=document.getElementById('gGuest'),gInternal=document.getElementById('gInternal');
+  const pwWrap=document.getElementById('gatePw'),pwInput=document.getElementById('gatePwInput'),pwBtn=document.getElementById('gatePwBtn'),pwErr=document.getElementById('gatePwErr');
+  const K='U3VmZTEyMDY=';
+  const CTRLS=['tplBtn','uploadBtn','dlBtn','fileInput'];
+  function setMode(m){const guest=(m==='guest');
+    CTRLS.forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=guest?'none':'';});
+    const mb=document.getElementById('modeBtn');if(mb)mb.textContent=guest?'🔒 内部登录':'👁 内部模式';
+    window.__viewMode=m;gate.style.display='none';}
+  gGuest.onclick=()=>setMode('guest');
+  gInternal.onclick=()=>{pwWrap.style.display='block';pwInput.value='';pwErr.textContent='';pwInput.focus();};
+  function tryPw(){if(pwInput.value===atob(K)){pwErr.textContent='';setMode('internal');}else{pwErr.textContent='密码错误，请重试';pwInput.value='';pwInput.focus();}}
+  pwBtn.onclick=tryPw;
+  pwInput.addEventListener('keydown',e=>{if(e.key==='Enter')tryPw();});
+  const mb=document.getElementById('modeBtn');if(mb)mb.onclick=()=>{gate.style.display='flex';pwWrap.style.display='none';pwInput.value='';pwErr.textContent='';};
+})();
 </script>
 </body>
 </html>
